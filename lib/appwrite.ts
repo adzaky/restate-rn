@@ -20,6 +20,8 @@ export const config = {
   reviewsCollectionId: process.env.EXPO_PUBLIC_APPWRITE_REVIEWS_COLLECTION_ID,
   propertiesCollectionId:
     process.env.EXPO_PUBLIC_APPWRITE_PROPERTIES_COLLECTION_ID,
+  facilitiesCollectionId:
+    process.env.EXPO_PUBLIC_APPWRITE_FACILITIES_COLLECTION_ID,
 };
 
 export const client = new Client();
@@ -145,5 +147,19 @@ export async function getProperties({
   } catch (error) {
     console.error(error);
     return [];
+  }
+}
+
+export async function getPropertyById({ id }: { id: string }) {
+  try {
+    const result = await databases.getDocument(
+      config.databaseId!,
+      config.propertiesCollectionId!,
+      id
+    );
+    return result;
+  } catch (error) {
+    console.error(error);
+    return null;
   }
 }
